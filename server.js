@@ -22,9 +22,9 @@ app.use(express.static('public'))
 //Get CALL to return JSON thats format natural and unix date
 
 var api = '/api/whoami';
-app.get(api,function(req,res) {
+app.get(api,function(req,res,next) {
   var language = req.acceptsLanguages();
-  var software = req.useragent.os;
+  var software = "OS: " + req.useragent.os +", Browser"+ req.useragent.browser;
   var ipaddress = req.ip;
   
  
