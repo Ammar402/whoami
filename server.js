@@ -3,9 +3,10 @@
 var express = require('express')
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var useragent = require('express-useragent');
 
 //Create an instance of express for our app and instantiate bodyParser and Cors
-var app = express();
+var app =module.exports= express();
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -18,13 +19,15 @@ app.use(express.static('public'))
 //Get CALL to return JSON thats format natural and unix date
 
 var api = '/api/whoami';
-app.get(api,function (request, response,next) => {
-  response.sendFile(__dirname + '/views/index.html')
+app.get(api,function (request,response,next) {
+  var language = request.acceptsLanguages();
+  var software = request.get('User-Agent');
+  var ipaddress = request.ip;
   
  
   
   
-   response.json({unix: unixDate,natural: naturalDate});
+   response.json({'ipaddress': ipaddress,'language':language[0],'software':software});
 });
 
 
