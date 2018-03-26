@@ -16,28 +16,14 @@ app.use(cors());
 app.use(express.static('public'))
 
 //Get CALL to return JSON thats format natural and unix date
-app.get("/:dateVal", (request, response) => {
+
+var api = '/api/whoami';
+app.get(api,function (request, response,next) => {
   response.sendFile(__dirname + '/views/index.html')
   
-  var dateVal = request.params.dateVal;
+ 
   
-  var dateFormattingOption = {
-  year:"numeric",
-  month:"long",
-  day:"numeric"
-  };
   
-  if(isNaN(dateVal)){
-  var naturalDate = new Date(dateVal);
-  naturalDate = naturalDate.toLocaleDateString("en-us",dateFormattingOption);
-  var unixDate = new Date(dateVal).getTime()/1000;
-  }
-  else
-  {
-    var unixDate = dateVal;
-    var naturalDate = new Date(dateVal * 1000);
-    naturalDate = naturalDate.toLocaleDateString("en-us",dateFormattingOption);
-  }
    response.json({unix: unixDate,natural: naturalDate});
 });
 
