@@ -9,6 +9,9 @@ var useragent = require('express-useragent');
 var app =module.exports= express();
 app.use(bodyParser.json());
 app.use(cors());
+app.use(useragent.express());
+
+
 
 
 
@@ -19,15 +22,15 @@ app.use(express.static('public'))
 //Get CALL to return JSON thats format natural and unix date
 
 var api = '/api/whoami';
-app.get(api,function (request,response,next) {
-  var language = request.acceptsLanguages();
-  var software = request.get('User-Agent');
-  var ipaddress = request.ip;
+app.get(api,function (req,res,next) {
+  var language = req.acceptsLanguages();
+  var software = req.useragent.os;
+  var ipaddress = req.ip;
   
  
   
   
-   response.json({'ipaddress': ipaddress,'language':language[0],'software':software});
+   res.json({'ipaddress': ipaddress,'language':language[0],'software':software});
 });
 
 
